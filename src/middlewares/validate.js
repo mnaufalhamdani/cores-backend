@@ -1,5 +1,9 @@
 import { errorResponse } from '../utils/responseHandler.js';
 
+/**
+ * Middleware untuk validasi input dengan menggunakan Zod
+ * @param {Object} schema - Schema object yang akan di validasi
+ */
 export default (schema) => (req, res, next) => {
   try {
      if (req.method === "POST") {

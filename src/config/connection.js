@@ -1,4 +1,9 @@
 
+/**
+ * Connect to database
+ * @param {object} db - pool database yang akan digunakan
+ * @returns {Promise<import('mysql2/promise')>} - hasil pool yang telah diinisialisasi
+ */
 export default async function connection(db) {
     try {
         const conn = await db.getConnection();
