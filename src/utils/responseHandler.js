@@ -1,3 +1,8 @@
+/**
+ * Success response handler
+ * @param {object} res - response object
+ * @returns {object} response object
+ */
 export const successResponse = (res, {
   status = 200,
   message = null,
@@ -11,6 +16,11 @@ export const successResponse = (res, {
   return res.status(status).json(response);
 };
 
+/**
+ * Error response handler
+ * @param {object} res - response object
+ * @returns {object} response object
+ */
 export const errorResponse = (res, {
   status = 401,
   message = null,

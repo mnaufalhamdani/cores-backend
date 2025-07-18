@@ -23,6 +23,7 @@ export const insertData = async (conn, table, data) => {
 
     const sql = `INSERT INTO ${table} (${columns}) VALUES (${placeholders}) ON DUPLICATE KEY UPDATE ${updateClause}`;
     const [result] = await conn.execute(sql, values);
+    // @ts-ignore
     return result;
   }catch (error) {
     console.error('Error in insertData:', error);
@@ -52,6 +53,7 @@ export const updateData = async (conn, table, whereClause, data) => {
     const params = safeValues([...Object.values(payload), ...Object.values(whereClause)]);
 
     const [result] = await conn.execute(sql, params);
+    // @ts-ignore
     return result.affectedRows;
   }catch (error) {
     console.error('Error in updateData:', error);
@@ -81,6 +83,7 @@ export const deleteData = async (conn, table, whereClause) => {
     const whereStr = Object.keys(whereClause).map(col => `${col} = ?`).join(' AND ');
     const sql = `DELETE FROM ${table} WHERE ${whereStr}`;
     const [result] = await conn.execute(sql, Object.values(whereClause));
+    // @ts-ignore
     return result.affectedRows;
   }catch (error) {
     console.error('Error in deleteData:', error);
@@ -92,7 +95,7 @@ export const deleteData = async (conn, table, whereClause) => {
  * Generate kode unik berdasarkan pengecekan data yang sudah ada
  * @param {import('mysql2/promise').Connection} db - koneksi mysql
  * @param {string} tableName - nama tabel
- * @param {Object} [options.id='id'] - nama kolom yang digunakan untuk pengecekan
+ * @param {Object} [options] - nama kolom yang digunakan untuk pengecekan {key}
  * @returns {Promise<import('mysql2/promise').OkPacket>} - hasil eksekusi query
  * @throws {Error} - jika terjadi kesalahan
  */
@@ -118,6 +121,7 @@ export const generateCode = async (db, tableName, options = {}) => {
   }
 
   const newCode = `${datePart}${String(total + 1).padStart(3, '0')}`;
+  // @ts-ignore
   return newCode;
 };
 
