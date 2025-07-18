@@ -5,7 +5,9 @@
     "checkJs": true,
     "baseUrl": ".",
     "paths": {
-        "@utils/*": ["src/utils/*"],
+      "@config/*": ["src/config/*"],
+      "@middlewares/*": ["src/middlewares/*"],
+      "@utils/*": ["src/utils/*"],
     },
   },
   "include": ["src"]

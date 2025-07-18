@@ -1,6 +1,6 @@
 {
   "name": "@mnaufalhamdani/cores-backend",
-  "version": "25.7.3",
+  "version": "25.7.5",
   "description": "Shared core module with ESM for Node.js backend applications, providing utilities for MySQL operations with a focus on clean architecture principles.",
   "type": "module",
   "main": "index.js",
@@ -23,6 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "mysql2": "^3.14.2",
-    "luxon": "^3.7.1"
+    "luxon": "^3.7.1",
+    "node-cron": "^4.2.1"
   }
 }
