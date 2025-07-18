@@ -1,6 +1,6 @@
 {
   "name": "@mnaufalhamdani/cores-backend",
-  "version": "25.7.5",
+  "version": "25.7.6",
   "description": "Shared core module with ESM for Node.js backend applications, providing utilities for MySQL operations with a focus on clean architecture principles.",
   "type": "module",
   "main": "index.js",

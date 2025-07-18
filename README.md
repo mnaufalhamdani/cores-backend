@@ -1,4 +1,5 @@
 # Cores Backend Shared Module
+[![NPM version](https://badgen.net/npm/v/@mnaufalhamdani/cores-backend)](https://www.npmjs.com/package/@mnaufalhamdani/cores-backend)
 
 Modul Node.js berbasis ESM yang berisi utilitas backend umum, seperti koneksi database, middleware, dan fungsi dinamis yang bisa digunakan ulang pada berbagai project Express.js / backend JavaScript.
 
