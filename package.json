@@ -17,7 +17,8 @@
   ],
   "keywords": [
     "mysql2", "insert", "update", "delete", "dynamic", "clean-architecture", 
-    "esm", "luxon"
+    "esm", "luxon", "middleware", "header", "encrypt", "decrypt", "random-code", 
+    "success-response", "error-response", "UTC", "timezone"
   ],
   "author": "mnaufalhamdani",
   "license": "MIT",
