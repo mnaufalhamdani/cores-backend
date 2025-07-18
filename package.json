@@ -1,12 +1,15 @@
 {
   "name": "@mnaufalhamdani/cores-backend",
-  "version": "25.7.2",
+  "version": "25.7.3",
   "description": "Shared core module with ESM for Node.js backend applications, providing utilities for MySQL operations with a focus on clean architecture principles.",
   "type": "module",
   "main": "index.js",
   "exports": {
     ".": "./index.js",
-    "./dynamic-model": "./src/utils/dynamicModel.js"
+    "./dynamic-model": "./src/utils/dynamicModel.js",
+    "./global-function": "./src/utils/globalFunction.js",
+    "./response-handler": "./src/utils/responseHandler.js",
+    "./timezone-format": "./src/utils/timezoneFormat.js"
   },
   "files": [
     "index.js",
