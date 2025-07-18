@@ -1,0 +1,1 @@
+export { insertData, updateData, deleteData, generateCode, generateUrutan } from './src/utils/dynamicModel.js';

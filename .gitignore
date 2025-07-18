@@ -1,0 +1,10 @@
+# Node.js
+node_modules/
+package-lock.json
+logs/
+.env
+dist/
+build/
+npm-debug.log*
+.DS_Store
+.vscode/
