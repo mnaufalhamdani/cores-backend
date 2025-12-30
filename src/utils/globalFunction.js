@@ -92,8 +92,9 @@ export function getBaseUrl(req) {
  * @returns {string} - teks yang telah di replace dari template
  */
 export function replaceTextFromTemplate(text, params) {
-  return text.replace(/{{(.*?)}}/g, (_, key) => {
-    const value = params[key.trim()];
+  return text.replace(/{{\s*(.*?)\s*}}|%\{\s*(.*?)\s*\}%/g, (match, k1, k2) => {
+    const key = (k1 || k2).trim();
+    const value = params[key];
     return value !== undefined ? value : '';
   });
 }
