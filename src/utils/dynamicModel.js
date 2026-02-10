@@ -192,16 +192,15 @@ export const generateCode = async (db, tableName, options = {}) => {
   );
 
   if (rows[0].count > 0) {
-    console.log("2");
     // Ambil ID terakhir (terbesar) yang mengandung tanggal hari ini
     const [lastRow] = await db.query(
       `SELECT ${id} FROM ${tableName} WHERE ${id} LIKE ? ORDER BY ${id} DESC LIMIT 1`, [`${datePart}%`]
     );
     const lastId = lastRow[0][id].toString();
-    total = parseInt(lastId.slice(-3), 10); // ambil 3 digit terakhir
+    total = parseInt(lastId.slice(-4), 10); // ambil 4 digit terakhir
   }
 
-  const newCode = `${datePart}${String(total + 1).padStart(3, '0')}`;
+  const newCode = `${datePart}${String(total + 1).padStart(4, '0')}`;
   // @ts-ignore
   return newCode;
 };
