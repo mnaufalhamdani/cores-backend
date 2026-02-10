@@ -62,6 +62,87 @@ export const updateData = async (conn, table, whereClause, data) => {
 };
 
 /**
+ * Update Data with WHERE IN
+ * @param {import('mysql2/promise').Connection} conn
+ * @param {string} table
+ * @param {{ [key: string]: Array<any> }} whereIn
+ * @param {Object} data
+ * @param {Object} [extraWhere]
+ * @returns {Promise<number>} affected rows
+ */
+export const updateDataWhereIn = async (
+  conn,
+  table,
+  whereIn,
+  data,
+  extraWhere = {}
+) => {
+  try {
+    const dateTimeUtc = DateTime.utc().toFormat('yyyy-MM-dd HH:mm:ss');
+    const payload = { ...data, updated_at: dateTimeUtc };
+
+    const safeValues = arr =>
+      arr.map(v => (typeof v === 'undefined' ? null : v));
+
+    /* =======================
+     * SET CLAUSE
+     * ======================= */
+    const setClause = Object.keys(payload)
+      .map(col => `${col} = ?`)
+      .join(', ');
+
+    /* =======================
+     * WHERE IN CLAUSE
+     * ======================= */
+    const whereInEntries = Object.entries(whereIn);
+
+    if (!whereInEntries.length) {
+      throw new Error('whereIn tidak boleh kosong');
+    }
+
+    const whereInClause = whereInEntries
+      .map(([col, values]) => {
+        if (!Array.isArray(values) || !values.length) {
+          throw new Error(`whereIn.${col} harus berupa array dan tidak kosong`);
+        }
+        const placeholders = values.map(() => '?').join(', ');
+        return `${col} IN (${placeholders})`;
+      })
+      .join(' AND ');
+
+    /* =======================
+     * EXTRA WHERE (=)
+     * ======================= */
+    const extraClause = Object.keys(extraWhere)
+      .map(col => `${col} = ?`)
+      .join(' AND ');
+
+    const whereClause = [
+      whereInClause,
+      extraClause
+    ].filter(Boolean).join(' AND ');
+
+    const sql = `UPDATE ${table} SET ${setClause} WHERE ${whereClause}`;
+
+    /* =======================
+     * PARAMS ORDER
+     * ======================= */
+    const params = safeValues([
+      ...Object.values(payload),
+      ...whereInEntries.flatMap(([, values]) => values),
+      ...Object.values(extraWhere)
+    ]);
+
+    const [result] = await conn.execute(sql, params);
+    // @ts-ignore
+    return result.affectedRows;
+  } catch (error) {
+    console.error('Error in updateDataWhereIn:', error);
+    throw error;
+  }
+};
+
+/**
  * Delete Data
  * @param {import('mysql2/promise').Connection} conn - koneksi mysql
  * @param {string} table - nama tabel
@@ -111,16 +192,15 @@ export const generateCode = async (db, tableName, options = {}) => {
   );
 
   if (rows[0].count > 0) {
-    console.log("2");
     // Ambil ID terakhir (terbesar) yang mengandung tanggal hari ini
     const [lastRow] = await db.query(
       `SELECT ${id} FROM ${tableName} WHERE ${id} LIKE ? ORDER BY ${id} DESC LIMIT 1`, [`${datePart}%`]
     );
     const lastId = lastRow[0][id].toString();
-    total = parseInt(lastId.slice(-3), 10); // ambil 3 digit terakhir
+    total = parseInt(lastId.slice(-4), 10); // ambil 4 digit terakhir
   }
 
-  const newCode = `${datePart}${String(total + 1).padStart(3, '0')}`;
+  const newCode = `${datePart}${String(total + 1).padStart(4, '0')}`;
   // @ts-ignore
   return newCode;
 };
