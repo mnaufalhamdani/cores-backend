@@ -219,6 +219,7 @@ export const generateUrutan = async (db, tableName, columnName, id) => {
     SELECT COALESCE(COUNT(${columnName}), 0) AS count
     FROM ${tableName}
     WHERE ${columnName} = ?
+    FOR UPDATE
   `, [id]);
 
   const urutan = (rows[0]?.count || 0) + 1;
